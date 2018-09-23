@@ -1,0 +1,37 @@
+*******************************************************************************
+*  SETUP & INSTALLATION OF VAGRANT and TASK EXECUTION USING ANSIBLE PLAYBOOK  *
+*******************************************************************************
+
+**********************
+Files and Folder List:
+**********************
+
+Inside TEST directory folder structure is as mentioned below:
+TEST
+ |--> install.sh
+ |--> Output.png
+ |--> playbook
+ |      |--> hosts
+ |      |--> playbook.yml
+ |      |--> random.txt
+ |--> Vagrantfile
+ |--> README
+
+**********************
+Steps:
+**********************
+1) create playbook/hosts file
+
+2) create playbook/playbook.yml file
+
+3) create random.txt file for testing in playbook directory
+
+4) #./install.sh
+   - It will install virtualbox-5.0 and vagrant 2.0.2
+   - It will boots vagrant.
+   - It will get private_key_file as well as creates ansible.cfg in playbook directory
+ 
+5) After completion of install.sh script, execute below command to check random.txt file.
+   - $ sudo vagrant ssh
+     $ cd /home/testuser
+     $ cat random.txt

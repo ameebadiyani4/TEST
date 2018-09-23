@@ -1,0 +1,45 @@
+---
+- hosts: webservers
+  become: true
+  gather_facts: no
+  tasks:
+    - name: "Installs python, supervisord, and the latest version of consul"
+      apt: name={{item}} state=present update_cache=yes
+      with_items:
+        - python
+        - supervisor
+
+    - name: "Creates a user testuser"
+      user: 
+        name: testuser
+      
+    - name: "Sets the systems timezone to Asia/Kolkata"
+      timezone: 
+        name: Asia/Kolkata
+
+#    - name: timezone
+#      file:
+#       src: /usr/share/zoneinfo/Asia/Kolkata
+#       dest: /etc/localtime
+#       owner: root
+#       group: root
+#       mode: 0644
+#       state: link
+       
+    - name: "Uploads a random local file from the host into the /home/testuser/ directory"
+      copy: 
+        src: random.txt
+        dest: /home/testuser/random.txt
+  
+    - name: "Install the latest version of consul"
+      unarchive: 
+        src: https://releases.hashicorp.com/consul/1.1.0/consul_1.1.0_linux_amd64.zip
+        dest: /usr/local/bin
+        remote_src: yes
+    
+    - name: "Verify consul version"
+      shell: "consul --version"
+      register: consul_version
+      
+    - debug: 
+        var: consul_version.stdout
